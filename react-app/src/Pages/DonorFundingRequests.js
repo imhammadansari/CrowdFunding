@@ -82,13 +82,11 @@ const DonorFundingRequests = () => {
                     <div className="p-2">
                         <p className="text-gray-700"><strong>Status:</strong> {request.status}</p>
                     </div>
-                    <div className="p-2">
-                        <p className="text-gray-700"><strong>Submitted At:</strong> {request.created_at}</p>
-                    </div>
                     <div className="col-span-full p-2">
                         <p className="text-gray-700"><strong>Message:</strong></p>
                         <p className="text-gray-700">{request.text}</p>
                     </div>
+                    
                 </div>
             </div>
             <div className="flex justify-center gap-4 mt-6">

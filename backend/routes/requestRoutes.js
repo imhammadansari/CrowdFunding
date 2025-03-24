@@ -2,11 +2,9 @@
 import express from 'express';
 const router = express.Router();
 import FundingRequest from '../models/fundingRequest.js';
-import IsLoggedIn from "../middlewares/IsLoggedIn.js";
-import isAdminLoggedIn from '../middlewares/isAdminLoggedIn.js';
 
 // POST: Create a new funding request
-router.post('/requests', IsLoggedIn, async (req, res) => {
+router.post('/requests', async (req, res) => {
     try {
         const newRequest = await FundingRequest.create(req.body);
         res.status(201).json(newRequest);
@@ -34,7 +32,7 @@ router.get('/approvedRequests', async (req, res) => {
     }
 });
 
-router.get('/getAllRequests', isAdminLoggedIn, async (req, res) => {
+router.get('/getAllRequests', async (req, res) => {
     try {
         const requests = await FundingRequest.find(); // Fetch only pending requests
         res.status(200).json(requests);
@@ -61,7 +59,7 @@ router.post('/updateStatus/:id', async (req, res) => {
 });
 
 // GET: Fetch a specific funding request by ID
-router.get('/requests/:id', IsLoggedIn, async (req, res) => {
+router.get('/requests/:id', async (req, res) => {
     try {
         const request = await FundingRequest.findById(req.params.id);
         if (!request) {

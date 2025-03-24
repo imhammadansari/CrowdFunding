@@ -55,7 +55,7 @@ const FundingRequestDetail = () => {
             <div className="bg-white border border-gray-200 rounded-lg shadow-md p-6 mx-auto max-w-4xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="p-2">
-                        <p className="text-gray-700"><strong>ID:</strong> {request.id || 'N/A'}</p>
+                        <p className="text-gray-700"><strong>ID:</strong> {request._id || 'N/A'}</p>
                     </div>
                     <div className="p-2">
                         <p className="text-gray-700"><strong>Name:</strong> {request.name || 'N/A'}</p>
@@ -85,11 +85,9 @@ const FundingRequestDetail = () => {
                         <p className="text-gray-700"><strong>Status:</strong> {request.status || 'N/A'}</p>
                     </div>
                     <div className="p-2">
-                        <p className="text-gray-700"><strong>Submitted At:</strong> {formatDate(request.created_at)}</p>
-                    </div>
-                    <div className="p-2">
                         <p className="text-gray-700"><strong>University Name:</strong> {request.university_name || 'N/A'}</p>
                     </div>
+                    
                     <div className="col-span-full p-2">
                         <p className="text-gray-700"><strong>Message:</strong></p>
                         <p className="text-gray-700">{request.text || 'N/A'}</p>

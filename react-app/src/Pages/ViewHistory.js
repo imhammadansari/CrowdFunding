@@ -10,8 +10,9 @@ const ViewHistory = () => {
         const fetchFundingRequests = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/requests/getRequests', {
-                    withCredentials: true, // Include cookies in the request
+                    withCredentials: true,
                 });
+                console.log('API Response:', response.data);
                 setFundingRequests(response.data);
             } catch (error) {
                 console.error('Failed to fetch funding requests:', error);
@@ -41,15 +42,25 @@ const ViewHistory = () => {
                     <tbody>
                         {fundingRequests.map((request) => (
                             <tr
-                                key={request.id}
-                                onClick={() => handleRowClick(request.id)}
+                                key={request._id}
+                                onClick={() => handleRowClick(request._id)}
                                 className="cursor-pointer hover:bg-gray-100 even:bg-gray-50"
                             >
-                                <td className="px-6 py-4 text-center">{new Date(request.created_at).toLocaleDateString()}</td>
+                                <td className="px-6 py-4 text-center">
+                                    {new Date(request.createdAt).toLocaleDateString()}  {/* Changed to createdAt */}
+                                </td>
                                 <td className="px-6 py-4 text-center">{request.amount}</td>
                                 <td className="px-6 py-4 text-center">{request.father_name}</td>
                                 <td className="px-6 py-4 text-center">{request.father_income}</td>
-                                <td className="px-6 py-4 text-center">{request.status}</td>
+                                <td className="px-6 py-4 text-center">
+                                    <span className={`px-2 py-1 rounded-full text-xs ${
+                                        request.status === 'Approved' ? 'bg-green-100 text-green-800' :
+                                        request.status === 'Rejected' ? 'bg-red-100 text-red-800' :
+                                        'bg-yellow-100 text-yellow-800'
+                                    }`}>
+                                        {request.status}
+                                    </span>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

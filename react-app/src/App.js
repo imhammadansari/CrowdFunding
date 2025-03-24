@@ -6,7 +6,6 @@ import DonorDashboard from './Pages/DonorDashboard';
 import Login from './Pages/Login'; 
 import PaymentForm from './Pages/PaymentForm'; 
 import PostRequest from './Pages/PostRequest'; 
-import RequestDetail from './Pages/RequestDetail'; 
 import Signup from './Pages/Signup'; 
 import ViewHistory from './Pages/ViewHistory'; 
 import Contact from './Pages/Contact'; 
@@ -17,6 +16,7 @@ import PaymentSuccess from './Pages/PaymentSuccess';
 import AllPayments from './Pages/AllPayments'; 
 import AdminLogin from './Pages/AdminLogin';
 import AdminSignup from './Pages/AdminSignup';
+import ViewHistoryRequest from './Pages/ViewHistoryRequest';
 
 function App() {
     return (
@@ -28,7 +28,6 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/payment/:id" element={<PaymentForm />} />
                 <Route path="/post_request" element={<PostRequest />} />
-                <Route path="/request_detail" element={<RequestDetail />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/view_history" element={<ViewHistory />} />
                 <Route path="/contact" element={<Contact />} />
@@ -39,6 +38,7 @@ function App() {
                 <Route path="/all_payments" element={<AllPayments />} />
                 <Route path="/admin_login" element={<AdminLogin />} />
                 <Route path="/admin_signup_safe" element={<AdminSignup />} />
+                <Route path="/view_request/:id" element={<ViewHistoryRequest />} />
 
             </Routes>
     );
