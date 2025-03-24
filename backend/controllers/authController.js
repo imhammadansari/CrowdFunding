@@ -78,6 +78,22 @@ export const ViewUser = async function (req, res){
     }
 }
 
+
+// Check if user is logged in
+export const checkLogin = (req, res) => {
+    const token = req.cookies.token;
+    if (!token) {
+        return res.status(401).json({ isLoggedIn: false });
+    }
+
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_KEY);
+        res.status(200).json({ isLoggedIn: true, user: decoded });
+    } catch (error) {
+        res.status(401).json({ isLoggedIn: false });
+    }
+};
+
 // Logout user
 export const logout = async function (req, res) {
     try {
