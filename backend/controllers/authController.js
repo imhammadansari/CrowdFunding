@@ -62,21 +62,21 @@ export const loginUser = async function (req, res) {
     });
 };
 
-
-// Check if user is logged in
-export const checkLogin = (req, res) => {
-    const token = req.cookies.token;
-    if (!token) {
-        return res.status(401).json({ isLoggedIn: false });
-    }
-
+export const ViewUser = async function (req, res){
     try {
-        const decoded = jwt.verify(token, process.env.JWT_KEY);
-        res.status(200).json({ isLoggedIn: true, user: decoded });
+
+        const user = req.user._id;
+
+        const employee = await employeeModule.findOne({user});
+
+        if(!user) return res.status(401).send("No user Found");
+
+        res.send({status: "ok", user: user})
     } catch (error) {
-        res.status(401).json({ isLoggedIn: false });
+        res.status(500).send({ error: error.message });  
+
     }
-};
+}
 
 // Logout user
 export const logout = async function (req, res) {

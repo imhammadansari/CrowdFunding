@@ -2,11 +2,14 @@
 import express from 'express';
 const router = express.Router();
 import FundingRequest from '../models/fundingRequest.js';
+import IsLoggedIn from '../middlewares/IsLoggedIn.js';
 
-// POST: Create a new funding request
-router.post('/requests', async (req, res) => {
+router.post('/requests', IsLoggedIn, async (req, res) => {
     try {
-        const newRequest = await FundingRequest.create(req.body);
+        const newRequest = await FundingRequest.create({
+            ...req.body,
+            user: req.user._id // Add the user ID from the authenticated session
+        });
         res.status(201).json(newRequest);
     } catch (error) {
         res.status(500).json({ message: 'Failed to submit request', error: error.message });
@@ -20,6 +23,24 @@ router.get('/getRequests', async (req, res) => {
         res.status(200).json(requests);
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch funding requests', error: error.message });
+    }
+});
+
+// Add this new route to fetch requests for the current user
+router.get('/user/requests', IsLoggedIn, async (req, res) => {
+    try {
+        // The user ID should come from the authenticated session
+        const userId = req.user._id;
+        
+        // Find all requests for this user
+        const requests = await FundingRequest.find({ user: userId }).sort({ createdAt: -1 });
+        
+        res.status(200).json(requests);
+    } catch (error) {
+        res.status(500).json({ 
+            message: 'Failed to fetch user requests', 
+            error: error.message 
+        });
     }
 });
 
