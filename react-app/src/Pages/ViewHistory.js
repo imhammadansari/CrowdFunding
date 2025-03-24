@@ -18,6 +18,7 @@ const ViewHistory = () => {
                 
                 if (response.data && Array.isArray(response.data)) {
                     setFundingRequests(response.data);
+                    console.log(response.data);
                 } else {
                     setFundingRequests([]);
                 }
@@ -60,21 +61,43 @@ const ViewHistory = () => {
                 </div>
             ) : (
                 <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
-                    <table className="min-w-full">
-                        {/* Table headers remain the same */}
-                        <tbody>
-                            {fundingRequests.map((request) => (
-                                <tr
-                                    key={request._id}
-                                    onClick={() => handleRowClick(request._id)}
-                                    className="cursor-pointer hover:bg-gray-100 even:bg-gray-50"
-                                >
-                                    {/* Table cells remain the same */}
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                <table className="min-w-full">
+                    <thead>
+                        <tr className="bg-orange-500 text-white">
+                            <th className="px-6 py-3">Submitted At</th>
+                            <th className="px-6 py-3">Amount</th>
+                            <th className="px-6 py-3">Father Name</th>
+                            <th className="px-6 py-3">Father Income</th>
+                            <th className="px-6 py-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {fundingRequests.map((request) => (
+                            <tr
+                                key={request._id}
+                                onClick={() => handleRowClick(request._id)}
+                                className="cursor-pointer hover:bg-gray-100 even:bg-gray-50"
+                            >
+                                <td className="px-6 py-4 text-center">
+                                    {new Date(request.createdAt).toLocaleDateString()}  {/* Changed to createdAt */}
+                                </td>
+                                <td className="px-6 py-4 text-center">{request.amount}</td>
+                                <td className="px-6 py-4 text-center">{request.father_name}</td>
+                                <td className="px-6 py-4 text-center">{request.father_income}</td>
+                                <td className="px-6 py-4 text-center">
+                                    <span className={`px-2 py-1 rounded-full text-xs ${
+                                        request.status === 'Approved' ? 'bg-green-100 text-green-800' :
+                                        request.status === 'Rejected' ? 'bg-red-100 text-red-800' :
+                                        'bg-yellow-100 text-yellow-800'
+                                    }`}>
+                                        {request.status}
+                                    </span>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
             )}
             
             <button
