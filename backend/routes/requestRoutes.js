@@ -6,26 +6,10 @@ import FundingRequest from '../models/fundingRequest.js';
 // POST: Create a new funding request
 router.post('/requests', async (req, res) => {
     try {
-        const newRequest = await FundingRequest.create({...req.body, user: req.user._id});
+        const newRequest = await FundingRequest.create(req.body);
         res.status(201).json(newRequest);
     } catch (error) {
         res.status(500).json({ message: 'Failed to submit request', error: error.message });
-    }
-});
-
-router.get('/userRequests/:userId', async (req, res) => {
-    try {
-        // Verify the requested userId matches the authenticated user
-        if (req.params.userId !== req.user._id.toString()) {
-            return res.status(403).json({ message: 'Unauthorized access' });
-        }
-
-        const requests = await FundingRequest.find({ user: req.user._id })
-            .sort({ createdAt: -1 });
-            
-        res.status(200).json(requests);
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to fetch user requests', error: error.message });
     }
 });
 
