@@ -11,6 +11,9 @@
     "dev": "node backend/app.js",
     "build": "npm install && npm install --prefix react-app && npm run build --prefix react-app"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
