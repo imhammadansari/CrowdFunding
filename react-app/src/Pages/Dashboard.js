@@ -9,7 +9,7 @@ const Dashboard = () => {
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/user/checkLogin', {
+                const response = await axios.get('https://crowdfunding-5ttm.onrender.com/api/user/checkLogin', {
                     withCredentials: true
                 });
                 if (response.data.isLoggedIn) {
@@ -29,7 +29,7 @@ const Dashboard = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.get('http://localhost:5000/api/user/logout', {
+            await axios.get('https://crowdfunding-5ttm.onrender.com/api/user/logout', {
                 withCredentials: true
             });
             localStorage.removeItem('userId');
