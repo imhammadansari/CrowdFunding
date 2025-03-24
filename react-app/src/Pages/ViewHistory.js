@@ -9,7 +9,7 @@ const ViewHistory = () => {
     useEffect(() => {
         const fetchFundingRequests = async () => {
             try {
-                const response = await axios.get('https://crowdfunding-5ttm.onrender.com/requests/getRequests', {
+                const response = await axios.get('https://crowdfunding-5ttm.onrender.com/requests/viewRequests/:id', {
                     withCredentials: true,
                 });
                 console.log('API Response:', response.data);

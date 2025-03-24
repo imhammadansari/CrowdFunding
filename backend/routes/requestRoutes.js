@@ -23,6 +23,21 @@ router.get('/getRequests', async (req, res) => {
     }
 });
 
+router.get('/viewRequests/:id'), async function (req, res) {  
+    try {  
+        const requestId = req.params.id; // Assuming the ID is passed as a URL parameter
+        let requests = await FundingRequest.findById(requestId); // Using findById instead of findOne
+        
+        if (!requests) {  
+            return res.status(404).send("requests not found.");  
+        }  
+        
+        res.send({ status: "ok", requests: requests });  
+    } catch (error) {  
+        res.status(500).send({ error: error.message });  
+    }  
+};
+
 router.get('/approvedRequests', async (req, res) => {
     try {
         const requests = await FundingRequest.find({ status: 'Approved' }); // Fetch only pending requests
