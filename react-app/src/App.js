@@ -29,7 +29,7 @@ function App() {
                 <Route path="/payment/:id" element={<PaymentForm />} />
                 <Route path="/post_request" element={<PostRequest />} />
                 <Route path="/signup" element={<Signup />} />
-                <Route path="/view_history/:id" element={<ViewHistory />} />
+                <Route path="/view_history" element={<ViewHistory />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/admin_dashboard" element={<AdminDashboard />} />
                 <Route path="/requests/:id" element={<FundingRequestDetail />} />

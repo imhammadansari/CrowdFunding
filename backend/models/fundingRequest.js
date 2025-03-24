@@ -2,6 +2,11 @@
 import mongoose from 'mongoose';
 
 const fundingRequestSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
     name: { type: String, required: true },
     dob: { type: Date, required: true },
     cnic: { type: String, required: true, unique: true },
