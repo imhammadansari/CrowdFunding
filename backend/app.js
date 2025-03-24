@@ -24,6 +24,23 @@ for (const envVar of requiredEnvVars) {
     }
 }
 
+const url = `https://crowdfunding-5ttm.onrender.com`;
+const interval = 30000;
+
+function reloadWebsite() {
+  axios
+    .get(url)
+    .then((response) => {
+      console.log("website reloded");
+    })
+    .catch((error) => {
+      console.error(`Error : ${error.message}`);
+    });
+}
+
+setInterval(reloadWebsite, interval);
+
+
 const app = express();
 
 // Database connection
@@ -40,7 +57,7 @@ const connectDb = async () => {
 
 // CORS configuration
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: 'https://crowdfunding-5ttm.onrender.com',
     credentials: true,
 };
 app.use(cors(corsOptions));

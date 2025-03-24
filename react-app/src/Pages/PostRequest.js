@@ -30,7 +30,7 @@ const PostRequest = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/requests/requests', formData, {
+            const response = await axios.post('https://crowdfunding-5ttm.onrender.com/requests/requests', formData, {
                 withCredentials: true, // Include cookies in the request
             });
             if (response.data) {
@@ -44,7 +44,7 @@ const PostRequest = () => {
                     progress: undefined,
                     theme: 'light',
                 });
-                setTimeout(() => navigate('/dashboard'), 3000); // Redirect after 3 seconds
+                setTimeout(() => navigate('/dashboard')); // Redirect after 3 seconds
             }
         } catch (error) {
             toast.error('Failed to submit request. Please try again.', {

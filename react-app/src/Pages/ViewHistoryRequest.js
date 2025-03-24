@@ -10,7 +10,7 @@ const ViewHistoryRequest = () => {
     useEffect(() => {
         const fetchRequest = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/requests/requests/${id}`, {
+                const response = await axios.get(`https://crowdfunding-5ttm.onrender.com/requests/requests/${id}`, {
                     withCredentials: true, // Include cookies in the request
                 });
                 setRequest(response.data);

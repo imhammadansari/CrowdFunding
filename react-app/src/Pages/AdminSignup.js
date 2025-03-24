@@ -28,7 +28,7 @@ const AdminSignup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/admin/admin_signup_safe', {
+            const response = await axios.post('https://crowdfunding-5ttm.onrender.com/admin/admin_signup_safe', {
                 fullname,
                 email,
                 password,
