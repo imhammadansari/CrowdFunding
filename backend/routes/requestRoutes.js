@@ -2,10 +2,9 @@
 import express from 'express';
 const router = express.Router();
 import FundingRequest from '../models/fundingRequest.js';
-import IsLoggedIn from '../middlewares/IsLoggedIn.js';
 
 // POST: Create a new funding request
-router.post('/requests', IsLoggedIn, async (req, res) => {
+router.post('/requests', async (req, res) => {
     try {
         const newRequest = await FundingRequest.create({...req.body, user: req.user._id});
         res.status(201).json(newRequest);
@@ -14,7 +13,7 @@ router.post('/requests', IsLoggedIn, async (req, res) => {
     }
 });
 
-router.get('/userRequests/:userId', IsLoggedIn, async (req, res) => {
+router.get('/userRequests/:userId', async (req, res) => {
     try {
         // Verify the requested userId matches the authenticated user
         if (req.params.userId !== req.user._id.toString()) {
