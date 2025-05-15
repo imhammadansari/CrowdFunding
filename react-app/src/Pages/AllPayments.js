@@ -10,7 +10,7 @@ const AllPayments = () => {
     useEffect(() => {
         const fetchPayments = async () => {
             try {
-                const response = await axios.get('https://crowdfunding-5ttm.onrender.com/payments/all');
+                const response = await axios.get('http://localhost:8080/payments/all');
                 setPayments(response.data);
                 setLoading(false);
             } catch (error) {

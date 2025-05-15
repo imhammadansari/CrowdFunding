@@ -12,7 +12,7 @@ const ViewHistory = () => {
         const fetchFundingRequests = async () => {
             try {
                 setLoading(true);
-                const response = await axios.get('https://crowdfunding-5ttm.onrender.com/requests/user/requests', {
+                const response = await axios.get('http://localhost:8080/requests/user/requests', {
                     withCredentials: true, // Important for sending cookies
                 });
                 

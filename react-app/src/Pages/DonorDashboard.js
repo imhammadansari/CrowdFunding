@@ -9,7 +9,7 @@ const DonorDashboard = () => {
     useEffect(() => {
         const fetchRequests = async () => {
             try {
-                const response = await axios.get('https://crowdfunding-5ttm.onrender.com/requests/approvedRequests', {
+                const response = await axios.get('http://localhost:8080/requests/approvedRequests', {
                     withCredentials: true, // Include cookies in the request
                 });
                 console.log('API Response:', response.data); // Debug: Log the API response

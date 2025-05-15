@@ -13,13 +13,13 @@ const AdminDashboard = () => {
         const fetchData = async () => {
             try {
                 // Fetch requests
-                const response = await axios.get('https://crowdfunding-5ttm.onrender.com/requests/getAllRequests', {
+                const response = await axios.get('http://localhost:8080/requests/getAllRequests', {
                     withCredentials: true, // Include cookies in the request
                 });
                 setRequests(response.data);
 
                 // Fetch total payments
-                const paymentsResponse = await axios.get('https://crowdfunding-5ttm.onrender.com/payments/total');
+                const paymentsResponse = await axios.get('http://localhost:8080/payments/total');
                 setTotalPayments(paymentsResponse.data.totalPayments);
 
                 setLoading(false);
@@ -35,7 +35,7 @@ const AdminDashboard = () => {
     // Update request status (Approve/Reject)
     const updateRequestStatus = async (id, status) => {
         try {
-            const response = await axios.post(`https://crowdfunding-5ttm.onrender.com/requests/updateStatus/${id}`, { status });
+            const response = await axios.post(`http://localhost:8080/requests/updateStatus/${id}`, { status });
             if (response.data.success) {
                 // Update the local state to reflect the new status
                 setRequests((prevRequests) =>

@@ -28,7 +28,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://crowdfunding-5ttm.onrender.com/users/signup', {
+            const response = await axios.post('http://localhost:8080/users/signup', {
                 fullname,
                 email,
                 password,

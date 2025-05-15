@@ -15,7 +15,7 @@ const PaymentForm = () => {
     useEffect(() => {
         const fetchFundingRequest = async () => {
             try {
-                const response = await axios.get(`https://crowdfunding-5ttm.onrender.com/requests/requests/${id}`);
+                const response = await axios.get(`http://localhost:8080/requests/requests/${id}`);
                 setFundingRequest(response.data); // Set the funding request details
                 setLoading(false);
             } catch (error) {
@@ -32,7 +32,7 @@ const PaymentForm = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`https://crowdfunding-5ttm.onrender.com/payments/pay/${id}`, {
+            const response = await axios.post(`http://localhost:8080/payments/pay/${id}`, {
                 requestId: id,
                 donorName,
                 donorEmail,
@@ -44,7 +44,7 @@ const PaymentForm = () => {
             // Redirect to Stripe checkout page
             window.location.href = response.data.url;
 
-            await axios.post(`https://crowdfunding-5ttm.onrender.com/requests/updateStatus/${id}`, {
+            await axios.post(`http://localhost:8080/requests/updateStatus/${id}`, {
                 status: 'Paid',
             });
         } catch (error) {
