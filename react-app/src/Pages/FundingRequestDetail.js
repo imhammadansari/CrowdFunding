@@ -12,7 +12,7 @@ const FundingRequestDetail = () => {
     useEffect(() => {
         const fetchRequestDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/requests/requests/${id}`);
+                const response = await axios.get(`https://funding-platform.up.railway.app/requests/requests/${id}`);
                 if (response.status === 404) {
                     setError('Request not found.');
                 } else {

@@ -28,7 +28,7 @@ function AdminLogin() {
 
 
     try {
-        const response = await axios.post('http://localhost:8080/admin/adminLogin', {
+        const response = await axios.post('https://funding-platform.up.railway.app/admin/adminLogin', {
             email: email,
             password: password,
         });

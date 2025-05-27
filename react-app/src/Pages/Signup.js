@@ -28,7 +28,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/users/signup', {
+            const response = await axios.post('https://funding-platform.up.railway.app/users/signup', {
                 fullname,
                 email,
                 password,

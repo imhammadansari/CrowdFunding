@@ -28,7 +28,7 @@ const AdminSignup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/admin/admin_signup_safe', {
+            const response = await axios.post('https://funding-platform.up.railway.app/admin/admin_signup_safe', {
                 fullname,
                 email,
                 password,

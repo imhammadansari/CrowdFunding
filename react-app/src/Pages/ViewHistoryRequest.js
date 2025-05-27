@@ -10,7 +10,7 @@ const ViewHistoryRequest = () => {
     useEffect(() => {
         const fetchRequest = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/requests/requests/${id}`, {
+                const response = await axios.get(`https://funding-platform.up.railway.app/requests/requests/${id}`, {
                     withCredentials: true, 
                 });
                 setRequest(response.data);

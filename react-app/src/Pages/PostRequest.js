@@ -30,7 +30,7 @@ const PostRequest = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8080/requests/requests', formData, {
+            const response = await axios.post('https://funding-platform.up.railway.app/requests/requests', formData, {
                 withCredentials: true,
             });
             if (response.status == 201) {

@@ -40,7 +40,7 @@ function Login() {
     e.preventDefault();
 
     try {
-        const response = await axios.post('http://localhost:8080/users/login', {
+        const response = await axios.post('https://funding-platform.up.railway.app/users/login', {
             email: email,
             password: password,
         });

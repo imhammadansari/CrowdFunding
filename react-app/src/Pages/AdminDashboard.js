@@ -11,12 +11,12 @@ const AdminDashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/requests/getAllRequests', {
+                const response = await axios.get('https://funding-platform.up.railway.app/requests/getAllRequests', {
                     withCredentials: true,
                 });
                 setRequests(response.data);
 
-                const paymentsResponse = await axios.get('http://localhost:8080/payments/total');
+                const paymentsResponse = await axios.get('https://funding-platform.up.railway.app/payments/total');
                 setTotalPayments(paymentsResponse.data.totalPayments);
 
                 setLoading(false);
@@ -31,7 +31,7 @@ const AdminDashboard = () => {
 
     const updateRequestStatus = async (id, status) => {
         try {
-            const response = await axios.post(`http://localhost:8080/requests/updateStatus/${id}`, { status });
+            const response = await axios.post(`https://funding-platform.up.railway.app/requests/updateStatus/${id}`, { status });
             if (response.data.success) {
                 setRequests((prevRequests) =>
                     prevRequests.map((request) =>

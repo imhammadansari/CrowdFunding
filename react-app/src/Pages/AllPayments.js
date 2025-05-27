@@ -10,7 +10,7 @@ const AllPayments = () => {
     useEffect(() => {
         const fetchPayments = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/payments/all');
+                const response = await axios.get('https://funding-platform.up.railway.app/payments/all');
                 setPayments(response.data);
                 setLoading(false);
             } catch (error) {
