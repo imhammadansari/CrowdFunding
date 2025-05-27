@@ -10,6 +10,19 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+    const notifySuccess = () => {
+        toast.success("Account Created Successfully", {
+            position: 'top-center',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark',
+        });
+    };
+
     const notifyError = (message) => {
         toast.error(message, {
             position: 'top-center',
@@ -34,10 +47,11 @@ const Signup = () => {
                 password,
             });
             if (response.status === 201 && response.data.message === "User registered successfully") {
+                notifySuccess()
                 setFullname('');
                 setEmail('');
                 setPassword('');
-                setTimeout (() => navigate('/login'), 3000)
+                setTimeout (() => navigate('/login'), 3000);
             } else {
                 notifyError(response.data);
             }

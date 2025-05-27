@@ -10,7 +10,7 @@ function Login() {
   const navigate = useNavigate();
 
   const succesNotify = () => {
-    toast.error('User loggedin successfully', {
+    toast.success('User loggedin successfully', {
       position: 'top-center',
       autoClose: 5000,
       hideProgressBar: false,
