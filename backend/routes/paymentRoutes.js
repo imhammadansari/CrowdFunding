@@ -1,26 +1,23 @@
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import Stripe from 'stripe';
-import dotenv from 'dotenv';
+const Stripe = require('stripe');
+const dotenv = require('dotenv');
 
-// Load environment variables FIRST
 dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-import Payment from '../models/paymentModel.js'; // Import the Payment model
-import FundingRequest from '../models/fundingRequest.js'; // Import the FundingRequest model
+const Payment = require('../models/paymentModel.js');
+const FundingRequest = require('../models/fundingRequest.js'); 
 
-router.post('/pay/:id', async (req, res) => {
+router.post('/pay/:id', async (req, res) => { 
     const { donorName, donorEmail, donorPhone, amount } = req.body;
     const requestId = req.params.id;
 
     try {
-        // Fetch the request details
         const request = await FundingRequest.findById(requestId);
         if (!request) {
             return res.status(404).json({ message: 'Request not found' });
         }
 
-        // Create a Stripe checkout session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
@@ -41,14 +38,13 @@ router.post('/pay/:id', async (req, res) => {
             customer_email: donorEmail,
         });
 
-        // Save payment details to the database
         const payment = new Payment({
             requestId: request._id,
             donorName,
             donorEmail,
             donorPhone,
             amount,
-            status: 'success', // Assuming the payment is successful
+            status: 'success', 
         });
         await payment.save();
 
@@ -63,13 +59,11 @@ router.get('/payment_success/:requestId', async (req, res) => {
     const requestId = req.params.requestId;
 
     try {
-        // Fetch the payment details from the database and populate the requestId field
         const payment = await Payment.findOne({ requestId }).populate('requestId');
         if (!payment) {
             return res.status(404).json({ message: 'Payment not found' });
         }
 
-        // Send the payment and funding request details to the frontend
         res.status(200).json({ payment });
     } catch (error) {
         console.error('Failed to fetch payment details:', error);
@@ -79,10 +73,8 @@ router.get('/payment_success/:requestId', async (req, res) => {
 
 router.get('/total', async (req, res) => {
     try {
-        // Fetch all payments from the database
         const payments = await Payment.find({});
 
-        // Calculate the total amount
         const totalPayments = payments.reduce((total, payment) => total + payment.amount, 0);
 
         res.status(200).json({ totalPayments });
@@ -92,10 +84,8 @@ router.get('/total', async (req, res) => {
     }
 });
 
-// Route to get all payments
 router.get('/all', async (req, res) => {
     try {
-        // Fetch all payments from the database
         const payments = await Payment.find({});
         res.status(200).json(payments);
     } catch (error) {
@@ -104,4 +94,4 @@ router.get('/all', async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

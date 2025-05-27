@@ -5,20 +5,17 @@ import { Link, useNavigate } from 'react-router-dom';
 const AdminDashboard = () => {
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [totalPayments, setTotalPayments] = useState(0); // State for total payments
-    const navigate = useNavigate(); // Hook for navigation
+    const [totalPayments, setTotalPayments] = useState(0);
+    const navigate = useNavigate();
 
-    // Fetch requests and total payments from the backend
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch requests
                 const response = await axios.get('http://localhost:8080/requests/getAllRequests', {
-                    withCredentials: true, // Include cookies in the request
+                    withCredentials: true,
                 });
                 setRequests(response.data);
 
-                // Fetch total payments
                 const paymentsResponse = await axios.get('http://localhost:8080/payments/total');
                 setTotalPayments(paymentsResponse.data.totalPayments);
 
@@ -32,12 +29,10 @@ const AdminDashboard = () => {
         fetchData();
     }, []);
 
-    // Update request status (Approve/Reject)
     const updateRequestStatus = async (id, status) => {
         try {
             const response = await axios.post(`http://localhost:8080/requests/updateStatus/${id}`, { status });
             if (response.data.success) {
-                // Update the local state to reflect the new status
                 setRequests((prevRequests) =>
                     prevRequests.map((request) =>
                         request._id === id ? { ...request, status } : request
@@ -49,7 +44,6 @@ const AdminDashboard = () => {
         }
     };
 
-    // Handle row click to navigate to request details
     const handleRowClick = (id) => {
         navigate(`/requests/${id}`);
     };
@@ -63,13 +57,12 @@ const AdminDashboard = () => {
             <h2 className="text-2xl font-bold mb-4">Admin Dashboard</h2>
             <p className="mb-4">Total Payments: {totalPayments} PKR</p>
             <Link
-                to="/all_payments" // Navigate to the all_payments route
+                to="/all_payments" 
                 className="inline-block mb-6 px-4 py-2 text-orange-500 border-2 border-orange-500 rounded-md hover:bg-orange-500 hover:text-white transition duration-300"
             >
                 View Payments
             </Link>
 
-            {/* Responsive Table Container */}
             <div className="overflow-x-auto">
                 <table className="w-full bg-white border-collapse border border-gray-300 shadow-md rounded-lg overflow-hidden">
                     <thead>

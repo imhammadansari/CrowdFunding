@@ -13,7 +13,7 @@ const ViewHistory = () => {
             try {
                 setLoading(true);
                 const response = await axios.get('http://localhost:8080/requests/user/requests', {
-                    withCredentials: true, // Important for sending cookies
+                    withCredentials: true,
                 });
                 
                 if (response.data && Array.isArray(response.data)) {
@@ -79,7 +79,7 @@ const ViewHistory = () => {
                                 className="cursor-pointer hover:bg-gray-100 even:bg-gray-50"
                             >
                                 <td className="px-6 py-4 text-center">
-                                    {new Date(request.createdAt).toLocaleDateString()}  {/* Changed to createdAt */}
+                                    {new Date(request.createdAt).toLocaleDateString()} 
                                 </td>
                                 <td className="px-6 py-4 text-center">{request.amount}</td>
                                 <td className="px-6 py-4 text-center">{request.father_name}</td>

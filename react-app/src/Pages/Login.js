@@ -9,6 +9,19 @@ function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const succesNotify = () => {
+    toast.error('User loggedin successfully', {
+      position: 'top-center',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    });
+  }
+
   const notify = () => {
     toast.error('Email or Password Incorrect', {
       position: 'top-center',
@@ -33,11 +46,11 @@ function Login() {
         });
 
         if (response.status === 201 && response.data.message === "User loggedin successfully") {
-            // Store user details in localStorage
             localStorage.setItem('userId', response.data.user._id);
-            localStorage.setItem('userName', response.data.user.name); // Store the user's name
+            localStorage.setItem('userName', response.data.user.name);
+            succesNotify();
 
-            navigate('/dashboard');
+            setTimeout(() => navigate('/dashboard'), 3000);
         } else {
             console.log("Login failed:", response.data);
             notify();

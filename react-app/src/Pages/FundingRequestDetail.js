@@ -3,13 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const FundingRequestDetail = () => {
-    const { id } = useParams(); // Get the request ID from the URL
+    const { id } = useParams(); 
     const [request, setRequest] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    // Fetch request details from the backend
     useEffect(() => {
         const fetchRequestDetails = async () => {
             try {
@@ -17,7 +16,7 @@ const FundingRequestDetail = () => {
                 if (response.status === 404) {
                     setError('Request not found.');
                 } else {
-                    setRequest(response.data); // Assuming the API returns the request object
+                    setRequest(response.data); 
                 }
                 setLoading(false);
             } catch (err) {
@@ -30,11 +29,10 @@ const FundingRequestDetail = () => {
         fetchRequestDetails();
     }, [id]);
 
-    // Format date for better readability
     const formatDate = (dateString) => {
         if (!dateString) return 'N/A';
         const date = new Date(dateString);
-        return date.toLocaleString(); // Adjust format as needed
+        return date.toLocaleString();
     };
 
     if (loading) {

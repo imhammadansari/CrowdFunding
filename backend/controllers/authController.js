@@ -1,10 +1,9 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import userModel from "../models/user.js";
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const userModel = require("../models/user.js");
 
 
-// Register a new user
-export const registeredUser = async function (req, res) {
+const registeredUser = async function (req, res) {
     try {
         let { fullname, email, password } = req.body;
 
@@ -23,10 +22,14 @@ export const registeredUser = async function (req, res) {
 
                     let token = jwt.sign({ email: user.email, _id: user._id }, process.env.JWT_KEY);
 
-                    res.cookie("token", token);
+                    res.cookie("token", token, {
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: 'None'
+                    });
                     res.status(201).json({ message: "User registered successfully", user });
 
-                
+
                 }
             });
         });
@@ -35,8 +38,8 @@ export const registeredUser = async function (req, res) {
         res.send(error.message);
     }
 };
-// Login user
-export const loginUser = async function (req, res) {
+
+const loginUser = async function (req, res) {
     let { email, password } = req.body;
 
     let user = await userModel.findOne({ email: email });
@@ -46,11 +49,15 @@ export const loginUser = async function (req, res) {
     bcrypt.compare(password, user.password, function (err, result) {
         if (result) {
             const token = jwt.sign({ email: user.email, _id: user._id }, process.env.JWT_KEY);
-            res.cookie("token", token);
-            res.status(201).json({ 
-                message: "User loggedin successfully", 
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None'
+            });
+            res.status(201).json({
+                message: "User loggedin successfully",
                 user: {
-                    name: user.fullname, // Include the user's name
+                    name: user.fullname,
                     email: user.email,
                     _id: user._id
                 }
@@ -62,25 +69,24 @@ export const loginUser = async function (req, res) {
     });
 };
 
-export const ViewUser = async function (req, res){
+const ViewUser = async function (req, res) {
     try {
 
         const user = req.user._id;
 
-        const employee = await employeeModule.findOne({user});
+        const employee = await employeeModule.findOne({ user });
 
-        if(!user) return res.status(401).send("No user Found");
+        if (!user) return res.status(401).send("No user Found");
 
-        res.send({status: "ok", user: user})
+        res.send({ status: "ok", user: user })
     } catch (error) {
-        res.status(500).send({ error: error.message });  
+        res.status(500).send({ error: error.message });
 
     }
 }
 
 
-// Check if user is logged in
-export const checkLogin = (req, res) => {
+const checkLogin = (req, res) => {
     const token = req.cookies.token;
     if (!token) {
         return res.status(401).json({ isLoggedIn: false });
@@ -94,11 +100,14 @@ export const checkLogin = (req, res) => {
     }
 };
 
-// Logout user
-export const logout = async function (req, res) {
+const logout = async function (req, res) {
     try {
         if (req.cookies.token) {
-            res.clearCookie("token");
+            res.clearCookie("token", {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None'
+            });
             return res.status(200).json({ message: "User logged out successfully" });
         }
         res.status(400).json({ message: "No user is logged in" });
@@ -107,3 +116,5 @@ export const logout = async function (req, res) {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+module.exports = { registeredUser, ViewUser, logout, checkLogin, loginUser };

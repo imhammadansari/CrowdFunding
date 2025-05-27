@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const ViewHistoryRequest = () => {
-    const { id } = useParams(); // Get the request ID from the URL
+    const { id } = useParams(); 
     const [request, setRequest] = useState(null);
     const navigate = useNavigate();
 
@@ -11,7 +11,7 @@ const ViewHistoryRequest = () => {
         const fetchRequest = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/requests/requests/${id}`, {
-                    withCredentials: true, // Include cookies in the request
+                    withCredentials: true, 
                 });
                 setRequest(response.data);
                 console.log('API Response:', response.data);

@@ -34,11 +34,10 @@ const Signup = () => {
                 password,
             });
             if (response.status === 201 && response.data.message === "User registered successfully") {
-                // Reset form fields
                 setFullname('');
                 setEmail('');
                 setPassword('');
-                navigate('/login'); // Redirect to login page after successful signup
+                setTimeout (() => navigate('/login'), 3000)
             } else {
                 notifyError(response.data);
             }

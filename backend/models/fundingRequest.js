@@ -1,5 +1,4 @@
-// models/FundingRequest.js
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const fundingRequestSchema = new mongoose.Schema({
     user: {
@@ -17,8 +16,8 @@ const fundingRequestSchema = new mongoose.Schema({
     father_income: { type: Number, required: true },
     university_name: { type: String, required: true },
     text: { type: String, required: true },
-    status: { type: String, default: 'Pending' }, // Default status is 'Pending'
-    createdAt: { type: Date, default: Date.now }, // Timestamp
+    status: { type: String, default: 'Pending' },
+    createdAt: { type: Date, default: Date.now },
 });
 
-export default mongoose.model('FundingRequest', fundingRequestSchema);
+module.exports = mongoose.model('FundingRequest', fundingRequestSchema);

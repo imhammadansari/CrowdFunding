@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
     requestId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'FundingRequest', // Reference to the FundingRequest model
+        ref: 'FundingRequest', 
         required: true,
     },
     donorName: {
@@ -33,5 +33,5 @@ const paymentSchema = new mongoose.Schema({
     },
 });
 
-export default mongoose.model('Payment', paymentSchema);
+module.exports = mongoose.model('Payment', paymentSchema);
 

@@ -1,14 +1,13 @@
-// routes/requestRoutes.js
-import express from 'express';
+const express = require('express');
 const router = express.Router();
-import FundingRequest from '../models/fundingRequest.js';
-import IsLoggedIn from '../middlewares/IsLoggedIn.js';
+const FundingRequest = require('../models/fundingRequest.js');
+const IsLoggedIn = require('../middlewares/IsLoggedIn.js');
 
 router.post('/requests', IsLoggedIn, async (req, res) => {
     try {
         const newRequest = await FundingRequest.create({
             ...req.body,
-            user: req.user._id // Add the user ID from the authenticated session
+            user: req.user._id
         });
         res.status(201).json(newRequest);
     } catch (error) {
@@ -16,23 +15,19 @@ router.post('/requests', IsLoggedIn, async (req, res) => {
     }
 });
 
-// GET: Fetch all pending funding requests
 router.get('/getRequests', async (req, res) => {
     try {
-        const requests = await FundingRequest.find({ status: 'Pending' }); // Fetch only pending requests
+        const requests = await FundingRequest.find({ status: 'Pending' }); 
         res.status(200).json(requests);
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch funding requests', error: error.message });
     }
 });
 
-// Add this new route to fetch requests for the current user
 router.get('/user/requests', IsLoggedIn, async (req, res) => {
     try {
-        // The user ID should come from the authenticated session
         const userId = req.user._id;
         
-        // Find all requests for this user
         const requests = await FundingRequest.find({ user: userId }).sort({ createdAt: -1 });
         
         res.status(200).json(requests);
@@ -46,7 +41,7 @@ router.get('/user/requests', IsLoggedIn, async (req, res) => {
 
 router.get('/approvedRequests', async (req, res) => {
     try {
-        const requests = await FundingRequest.find({ status: 'Approved' }); // Fetch only pending requests
+        const requests = await FundingRequest.find({ status: 'Approved' }); 
         res.status(200).json(requests);
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch funding requests', error: error.message });
@@ -55,7 +50,7 @@ router.get('/approvedRequests', async (req, res) => {
 
 router.get('/getAllRequests', async (req, res) => {
     try {
-        const requests = await FundingRequest.find(); // Fetch only pending requests
+        const requests = await FundingRequest.find(); 
         res.status(200).json(requests);
     } catch (error) {
         res.status(500).json({ message: 'Failed to fetch funding requests', error: error.message });
@@ -79,7 +74,6 @@ router.post('/updateStatus/:id', async (req, res) => {
     }
 });
 
-// GET: Fetch a specific funding request by ID
 router.get('/requests/:id', async (req, res) => {
     try {
         const request = await FundingRequest.findById(req.params.id);
@@ -92,4 +86,4 @@ router.get('/requests/:id', async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

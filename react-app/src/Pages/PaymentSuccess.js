@@ -3,14 +3,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const PaymentSuccess = () => {
-    const { requestId } = useParams(); // Get the requestId from the URL
+    const { requestId } = useParams();
     const navigate = useNavigate();
     const [payment, setPayment] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        // Fetch payment details from the backend
         const fetchPaymentDetails = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/payments/payment_success/${requestId}`);

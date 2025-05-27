@@ -31,9 +31,9 @@ const PostRequest = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/requests/requests', formData, {
-                withCredentials: true, // Include cookies in the request
+                withCredentials: true,
             });
-            if (response.data) {
+            if (response.status == 201) {
                 toast.success('Request submitted successfully!', {
                     position: 'top-center',
                     autoClose: 3000,
@@ -44,9 +44,10 @@ const PostRequest = () => {
                     progress: undefined,
                     theme: 'light',
                 });
-                setTimeout(() => navigate('/dashboard')); // Redirect after 3 seconds
+                setTimeout(() => navigate('/dashboard'), 3000);
             }
         } catch (error) {
+            if(error.response || error.response.status == 500){
             toast.error('Failed to submit request. Please try again.', {
                 position: 'top-center',
                 autoClose: 3000,
@@ -58,6 +59,7 @@ const PostRequest = () => {
                 theme: 'light',
             });
             console.error(error);
+        }
         }
     };
 

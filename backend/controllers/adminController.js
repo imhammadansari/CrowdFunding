@@ -1,10 +1,9 @@
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import userModel from "../models/admin.js";
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const userModel = require("../models/admin.js");
 
 
-// Register a new user
-export const registeredUser = async function (req, res) {
+const registeredUser = async function (req, res) {
     try {
         let { fullname, email, password } = req.body;
 
@@ -20,10 +19,14 @@ export const registeredUser = async function (req, res) {
                         email,
                         password: hash,
                     });
-        
+
                     let token = jwt.sign({ email: user.email, _id: user._id }, process.env.JWT_KEY);
-        
-                    res.cookie("token", token);
+
+                    res.cookie("token", token, {
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: 'None'
+                    });
                     res.status(201).json({ message: "User registered successfully", user });
                 }
             });
@@ -33,8 +36,8 @@ export const registeredUser = async function (req, res) {
         res.send(error.message);
     }
 };
-// Login user
-export const loginUser = async function (req, res) {
+
+const loginUser = async function (req, res) {
     let { email, password } = req.body;
 
     let user = await userModel.findOne({ email: email });
@@ -48,7 +51,11 @@ export const loginUser = async function (req, res) {
         if (result) {
             const token = jwt.sign({ email: user.email, _id: user._id }, process.env.JWT_KEY);
 
-            res.cookie("token", token);
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None'
+            });
             res.status(201).json({ message: "User loggedin successfully", user });
         } else {
             console.log("Password incorrect");
@@ -57,11 +64,15 @@ export const loginUser = async function (req, res) {
     });
 };
 
-// Logout user
-export const logout = async function (req, res) {
+
+const logout = async function (req, res) {
     try {
         if (req.cookies.token) {
-            res.clearCookie("token");
+            res.clearCookie("token", {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'None'
+            });
             return res.status(200).json({ message: "User logged out successfully" });
         }
         res.status(400).json({ message: "No user is logged in" });
@@ -70,3 +81,5 @@ export const logout = async function (req, res) {
         res.status(500).json({ message: "Internal server error" });
     }
 };
+
+module.exports = { registeredUser, loginUser, logout };
